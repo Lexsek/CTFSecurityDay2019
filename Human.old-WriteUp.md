@@ -112,20 +112,22 @@ En effet, le seul est unique bon paramètre étant --3333, les autres appels fon
 ### Analyse de l'injection
 
 La bonne fonction d'injection était donc celle que j'ai renommée en "CreateCalcAndInjectRIGHTShellcode".<br>
-Voici son graph :<br>
-(image)
+Voici son graph :<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-223859_151x786_scrot.png "inject1 ReverseHub.exe")<br><br>
 
-Un calc.exe en 32bits est crée via CreateProcessA
-(image)
+Un calc.exe en 32bits est crée via CreateProcessA<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-223919_522x738_scrot.png "inject2 ReverseHub.exe")<br><br>
 
-Le programme va ensuite retrouver son PID après un parcours de la structure des processus en mémoire
-(image)
+Le programme va ensuite retrouver son PID après un parcours de la structure des processus en mémoire<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-223952_336x517_scrot.png "inject2 ReverseHub.exe")<br><br>
 
-Un appel à OpenProcess est effectué afin d'obtenir un handle sur le processus calc.exe précèdemment lancé, ainsi qu'une allocation dans le processus distant calc.exe. Une suite d'opcode et de data va être déplacé à différentes adresses.
-(image)
 
-3 appels à WriteProcessMemory vont être effectués pour écrire dans la mémoire du processus distant calc.exe, la data écrite est la suivante dans le cas de --3333 :
-(image)
+Un appel à OpenProcess est effectué afin d'obtenir un handle sur le processus calc.exe précèdemment lancé, ainsi qu'une allocation dans le processus distant calc.exe. Une suite d'opcode et de data va être déplacé à différentes adresses.<br><br
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-224043_410x511_scrot.png "inject2 ReverseHub.exe")<br><br>
+
+
+3 appels à WriteProcessMemory vont être effectués pour écrire dans la mémoire du processus distant calc.exe, la data écrite est la suivante dans le cas de --3333 :<br><br
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-224207_300x364_scrot.png "inject2 ReverseHub.exe")<br><br>
 
 ```
 \x76\x60\x74\x7a\x48\x79\x03\x5b\x7d\x6c\x77\x03\x76\x4e\xe8
@@ -133,8 +135,9 @@ Un appel à OpenProcess est effectué afin d'obtenir un handle sur le processus 
 \x31\x44\x13\xED\x42\xE2\xF9
 ```
 
-Et un appel à CreateRemoteThread va être effectué à partir du 0xe8
-(image)
+Et un appel à CreateRemoteThread va être effectué à partir du 0xe8<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-224523_330x582_scrot.png "injectthread ReverseHub.exe")<br><br>
+
 
 ### Analyse du shellcode 
 
