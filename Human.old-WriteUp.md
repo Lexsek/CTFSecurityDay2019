@@ -184,7 +184,8 @@ __asm
 			loop L1
 	}
 ```
-	
+
+Ce shellcode permet en fait de déchiffrer la donner au dessus via un xor d'une clé de 0x33 !<br>
 Réimplémentation de l'algorithme en python :<br>
 
 ```python
