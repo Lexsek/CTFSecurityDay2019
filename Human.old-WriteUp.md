@@ -9,7 +9,7 @@
 
 ## Solutions :<br><br>
 
-### Reconnaissance :
+### Premiers pas :
 On obtient un executable windows de type PE32 :<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/file_pe32.png "file ReverseHub.exe")<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/icone.png "icone ReverseHub.exe")<br><br>
