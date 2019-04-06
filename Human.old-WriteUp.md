@@ -50,7 +50,7 @@ Breaker sur la nouvelle instruction de jmp après le nouveau block apparu<br><br
 Aller jusqu'au bloc vert<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/3rdpack.png "unpack3 ReverseHub.exe")<br><br>
 **Phase 4:**<br>
-Breaker sur le call dans le block vert, juste après le mov de \[esi\]<br><br>
+Breaker sur le call dans le block vert, juste après le push de \[esi\]<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/b3rd.png "unpack4 ReverseHub.exe")<br><br>
 Ce call correspond en fait a l'entry point de l'executable original, nous allons donc dumper le disque afin de faire une analyse statique du reste du programme.<br>
 Notre binaire commence à l'adresse **0x011F3710**, cette adresse est situé dans le segment 20. Nous allons donc dumper proprement ce segment à l'aide d'un script python IDA, mais il faudra au préalable calculer sa taille.<br><br>
