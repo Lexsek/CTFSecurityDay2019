@@ -90,6 +90,8 @@ Les apppels de fonctions correspondent pour la plupart à des antidebugs et anti
 * Création d'un fichier troll avec de la base64 inutile<br>
 * Vérification du mouvement de la souris<br><br>
 
+Un système d'allocation mémoire, de déchiffrement de chaines de caractères via rot1 est également implémenté avant plusieurs actions et de se faire shredder.<br>
+
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/prog1.png "antistuff ReverseHub.exe")<br><br>
 
 La variable var_2C servait en fait de compteur pour vérifier si l'on s'était fait detecter par les fonctions d'anti VM / DEBUG / SANDBOX, et elle était incrémentée de 1 juste avant d'arriver sur les comparaisons avec les integers.<br><br>
@@ -122,11 +124,11 @@ Le programme va ensuite retrouver son PID après un parcours de la structure des
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-223952_336x517_scrot.png "inject2 ReverseHub.exe")<br><br>
 
 
-Un appel à OpenProcess est effectué afin d'obtenir un handle sur le processus calc.exe précèdemment lancé, ainsi qu'une allocation dans le processus distant calc.exe. Une suite d'opcode et de data va être déplacé à différentes adresses.<br><br
+Un appel à OpenProcess est effectué afin d'obtenir un handle sur le processus calc.exe précèdemment lancé, ainsi qu'une allocation dans le processus distant calc.exe. Une suite d'opcode et de data va être déplacé à différentes adresses.<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-224043_410x511_scrot.png "inject2 ReverseHub.exe")<br><br>
 
 
-3 appels à WriteProcessMemory vont être effectués pour écrire dans la mémoire du processus distant calc.exe, la data écrite est la suivante dans le cas de --3333 :<br><br
+3 appels à WriteProcessMemory vont être effectués pour écrire dans la mémoire du processus distant calc.exe, la data écrite est la suivante dans le cas de --3333 :<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images/2019-04-06-224207_300x364_scrot.png "inject2 ReverseHub.exe")<br><br>
 
 ```
