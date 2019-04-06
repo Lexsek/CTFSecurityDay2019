@@ -3,8 +3,8 @@
 ## Informations :<br><br>
 **Challenge** : Human.old<br>
 **Description** : M0th3r > Bravo, grâce à toi, on a enfin sauvé Duke. C'est le moment de voir sa BaseLine. Qui se cachait réellement derrière Duke-083<br>
-**Points** : 500
-**Solves** : 1
+**Points** : 500<br>
+**Solves** : 1<br>
 **Contributeur** : Lexsek<br>
 
 ## Solutions :<br><br>
