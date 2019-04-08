@@ -119,18 +119,20 @@ La suite va concaténer le dossier AppData\\Local\\Temp de l'utilisateur avec "s
 Ici un appel à CreateFile pour crée le fichier "s".<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/creatfiles.png "screen BadPunk.exe")<br><br>
 
-Deux variables sont initialisées, elles serviront à stocker le résultat des instructions RTDSC (ReaD TimeStamp Counter). Elle retourne dans le couple de registre EDX:EAAX le nombre de ticks écoulés depuis la dernière mise à zéro du processeur.<br><br>
+Deux variables sont initialisées, elles serviront à stocker le résultat des instructions RTDSC (ReaD TimeStamp Counter). Elle retourne dans le couple de registre EDX:EAX le nombre de ticks écoulés depuis la dernière mise à zéro du processeur.<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/rtdsc_1.png "screen BadPunk.exe")<br><br>
 
 Après avoir écrit dans le fichier "s", le malware vérifie le temps écoulé entre les deux appels à RTDSC via une soustration, si la différence est supérieure à 15000 ticks, le malware appelle deux fonctions, WriteMbr et Reboot !<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/writefile_andrtdsc.png "screen BadPunk.exe")<br><br>
 
 Regardons d'un peu plus près le write MBR:<br><br>
-Cette fonction va s'occuper de faire un CreateFile sur \\.\PhysicalDrive0 (correspond au MBR), et d'écraser son contenu. 
-(image)
+Cette fonction va s'occuper de faire un CreateFile sur \\.\PhysicalDrive0 (correspond au MBR), et d'écraser son contenu avec un WriteFile.<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/mbr1.png "screen BadPunk.exe")<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/mbr2.png "screen BadPunk.exe")<br><br>
 Et pour le reboot :<br><br>
 Ici, le malware appelle OpenProcessToken, vérifie qu'il à les droit SeShutdownPrivileges, et si c'est le cas, redémarre la machine.
-(image)
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/reboot.png "screen BadPunk.exe")<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/reboot2.png "screen BadPunk.exe")<br><br>
 
 Après avoir passé ces étapes, le malware crée un deuxième fichier dans le répertoire temporaire sous le nom de "ss", et appelle la fonction que j'ai renommée en Write_SS_File_Xor42_Of_S_File_And_Being_Debugged_WriteMBR_INTO_REBOOT. Cette fonction s'occupe principalement de lire notre premier fichier "s" écrit correspondant au screenshot de la machine au format image BMP, de le xorer avec la clé 0x42 et de l'écrire dans le fichier "ss"<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/ssfile_wrap.png "screen BadPunk.exe")<br><br>
