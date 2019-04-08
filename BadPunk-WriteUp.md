@@ -410,8 +410,10 @@ int main()
 }
 ```
 
-Je lance maintenant le script et obtient toutes les sorties possibles. Il ne reste plus qu'a faire un script python qui génère le domaine et le requête en GET pour voir si on récupère un code 200.
+Je lance maintenant le script et obtient toutes les sorties possibles.<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/curlflag2.png "screen BadPunk.exe")<br><br>
 
+Il ne reste plus qu'a faire un script python qui génère le domaine et le requête en GET pour voir si on récupère un code 200.<br>
 Je vais découper le fichier avant cela :
 ```bash
 awk '{print $7}' generated_dga.txt > hash_mmh3.txt
@@ -450,5 +452,5 @@ curl -A "BadPunk" -X GET "https://imsbs1rs2jnkdf2f17018871f197.ctf.hacklab-esgi.
 ```
 You got it: ESGI{I_m-No_0ne_PLZ_k1LL-ME}
 
-Si on fait via IDA en modifiant l'heure du système, le flag apparait via le WinHttpReadData
+Si on fait via IDA en modifiant l'heure du système, le flag apparait via le WinHttpReadData:<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/flag2.png  "screen BadPunk.exe")<br><br>
