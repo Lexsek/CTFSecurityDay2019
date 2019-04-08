@@ -131,7 +131,7 @@ Cette fonction va s'occuper de faire un CreateFile sur \\.\PhysicalDrive0 (corre
 ...<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/mbr2.png "screen BadPunk.exe")<br><br>
 Et pour le reboot :<br><br>
-Ici, le malware appelle OpenProcessToken, vérifie qu'il à les droit SeShutdownPrivileges, et si c'est le cas, redémarre la machine.
+Ici, le malware appelle OpenProcessToken, ajuste les droits SeShutdownPrivileges, et si cela fonctionne, redémarre la machine.
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/reboot.png "screen BadPunk.exe")<br><br>
 Et voici à quoi ressemble la machine après que le MBR soit écrasé et que la machine reboot, une jolie animation !<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/reboot2.png "screen BadPunk.exe")<br><br>
@@ -220,7 +220,7 @@ Nous allons maintenant passer dans la fonction AntiDebugFindWindow_SecondNetwork
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/recall2nd.png "screen BadPunk.exe")<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/wrpcall2ndnet.png "screen BadPunk.exe")<br><br>
 
-Ici, on remarque qu'en fait le malware va faire une requête GET sur le nom de domaine généré au préalable par le DGA.<br>
+Ici, on remarque qu'en fait le malware va faire une requête GET "imsBs1Rs2jNk" sur le nom de domaine généré au préalable par le DGA.<br>
 Puis le malware boucle si il n'a pas reçu de réponse du C&C, et recommence.<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/sleep_repeat2ndnet.png "screen BadPunk.exe")<br><br>
 
@@ -411,7 +411,7 @@ int main()
 ```
 
 Je lance maintenant le script et obtient toutes les sorties possibles.<br><br>
-![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/curlflag2.png "screen BadPunk.exe")<br><br>
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/dgabf.png "screen BadPunk.exe")<br><br>
 
 Il ne reste plus qu'a faire un script python qui génère le domaine et le requête en GET pour voir si on récupère un code 200.<br>
 Je vais découper le fichier avant cela :
@@ -442,6 +442,7 @@ for mmh3 in mmh3s:
     except:
         pass
 ```
+![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/curlflag2.png "screen BadPunk.exe")<br><br>
 
 Il s'avère que le domaine himsBs1Rs2jNkdf2f17018871f197.ctf.hacklab-esgi.org match, et il était généré avec le nombre 1337. La bonne heure du système était donc 13h37 !<br><br>
 
@@ -450,7 +451,7 @@ Ici un petit curl solvant le challenge :
 ```bash
 curl -A "BadPunk" -X GET "https://imsbs1rs2jnkdf2f17018871f197.ctf.hacklab-esgi.org/imsBs1Rs2jNk" -k
 ```
-You got it: ESGI{I_m-No_0ne_PLZ_k1LL-ME}
+You got it: ESGI{I_m-No_0ne_PLZ_k1LL-ME}<br>
 
 Si on fait via IDA en modifiant l'heure du système, le flag apparait via le WinHttpReadData:<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/flag2.png  "screen BadPunk.exe")<br><br>
