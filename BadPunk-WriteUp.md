@@ -207,9 +207,9 @@ Et supprimer le fichier xoré "ss" via DeleteFileW<br><br>
 De nouveaux anti-debugs vont essayer de nous barrer la route, une fonction permettant de parcourir les processus en mémoire, et une fonction vérifiant si un debugger est attaché. Encore une fois, si nous nous faisons détecter, le MBR se fait écraser et la machine reboot<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/crawlprocwrp_checkremote.png "screen BadPunk.exe")<br><br>
 
-Les process seront crawlés par Process32Next, et un appel à decrypt_all_rkr_process_to_find_comp qui s'occupera de déchiffrer les strings finissant par .rkr (les .exe rot13 du début) et de comparer avec le processus actuellement crawlé.<br><br>
+Les process seront crawlés par Process32Next, et un appel à decrypt_all_rkr_process_to_find_comp qui s'occupera de déchiffrer les strings finissant par .rkr (les .exe rot13 du début) et de comparer avec le processus actuellement crawlé.<br>
+La fonction check_hash_vs_API_functions_to_load_it sera d'ailleur appelée très souvent afin de charger dans EAX l'adresse de la fonction correspondante au hash pour obfusquer les appels de fonctions !<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/crawlproc.png "screen BadPunk.exe")<br><br>
-
 
 Une fois ces épreuves passées, nous arrivons sur un GetSystemTime, le malware va récupérer l'heure et la minute du système, en générer un hash, et le concatener avec le token précedemment obtenu ainsi que le nom de domaine afin d'obtenir quelquechose sous la forme : \<token\>\<hash_du_temps_systeme\>\<.ctf.hacklab-esgi.org\><br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/before_2nd_gen_time.png "screen BadPunk.exe")<br><br>
