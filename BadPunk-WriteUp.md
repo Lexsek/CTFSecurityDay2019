@@ -166,16 +166,28 @@ Pour la réponse, il suffit de passer le WinHttpReadData<br><br>
 Et nous recevrons le flag, précédé d'un "token" !<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/flag1.png "screen BadPunk.exe")<br><br>
 
-Un autre moyen de résoudre le challenge, et ... de bourrer l'espace disque du serveur aurait été le suivant:
-Prendre une image au format bmp (image de l'image)
-Faire un script qui xor l'image python script ici
-Xorer l'image 
-xxd image sortie
-Lancer un curl avec le bon user agent et les bons params !
-(image retour)
-Puis, on aurait pu while true...
-! (script xor42 un bmp, et send via curl et user agent !)(image aussi)
-// TODO !
+Un autre moyen de résoudre le challenge, et ... de bourrer l'espace disque du serveur aurait été le suivant:<br>
+* Prendre une image au format bmp<br>
+* Faire un script qui xor l'image python script ici<br>
+
+```python
+import sys
+
+b = bytearray(open(sys.argv[1], 'rb').read())
+
+for i in range(len(b)):
+    b[i] ^= 0x42
+
+open('xored_bmp', 'wb').write(b)
+```
+* Xorer l'image et l'appeler 00234567.dat (timestamp matchant les headers)<br>
+* Lancer un curl avec le bon user agent et les bons paramètres<br>
+
+```bash
+curl -k https://b4dpunk42.ctf.hacklab-esgi.org/getCnCSeed -A "BadPunk" -X POST -H "Content-Type: multipart/form-data; boundary=----Boundary00234567" -F 'uploaded=@00234567.dat'
+```
+ESGI{Wh0_4m_I?Plz_D0_it!}<br>
+* Puis, on aurait pu while true sur le curl afin de bourrer l'espace disque du serveur...
 
 ## Informations :<br><br>
 
