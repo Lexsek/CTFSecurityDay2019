@@ -110,7 +110,7 @@ S'en suivra ensuite une fonction que j'appelle screenshot_desktop_anti_debug_ntt
 Un appel à GetTempPathA sera effectué afin de récupéré le dossier temporaire de l'utilisateur courant:<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/incallscreen.png "screen BadPunk.exe")<br><br>
 
-Pour l'anti débug, il se situe dans le blocs en bleu. Precedemment le malware cherche l'adresse de NtSetInformationThread puis l'appel avec l'option "ThreadHideFromDebugger" qui permet dans le cas ou l'on debug le malware, de masquer le mainthread (récupéré par GetCurrentThread) auprès du debugger.<br><br>
+Pour l'anti débug, il se situe dans le blocs en bleu. Precedemment le malware cherche l'adresse de NtSetInformationThread puis l'appelle avec l'option "ThreadHideFromDebugger" qui permet dans le cas ou l'on debug le malware, de masquer le mainthread (récupéré par GetCurrentThread) auprès du debugger.<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/antidebugthread.png "screen BadPunk.exe")<br><br>
 
 La suite va concaténer le dossier AppData\\Local\\Temp de l'utilisateur avec "s", et y écrire le screenshot dans le fichier 's' via cette fonction : WriteScreenShotAppDataFileS_AntiDebugRTDSC_INTO_WriteMBR_REBOOT<br><br>
@@ -145,7 +145,7 @@ Un anti debug est encore présent, il s'agit du champ BeingDebugged dans la stru
 Voici la boucle de chiffrement du fichier BMP et s'en suis l'écriture dans le fichier "ss".<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/xor42.png "screen BadPunk.exe")<br><br>
 
-Ensuite, une string va etre inversée et rot 13, il s'agit du domaine .ctf.hacklab-esgi.org. Cette chaine va être concaténé avec b4dpunk42 pour former au final b4dpunk42.ctf.hacklab-esgi.org<br><br>
+Ensuite, une string va etre inversée et rot 13, il s'agit du domaine .ctf.hacklab-esgi.org. Cette chaine va être concaténée avec b4dpunk42 pour former au final b4dpunk42.ctf.hacklab-esgi.org<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/rot_domain.png "screen BadPunk.exe")<br><br>
 
 Une fois tout ça passé, l'appel d'une fonction importante sera "FirstNetworkCall", elle prend en paramètre (null, le chemin du fichier ss, null, et le nom de domaine).<br><br>
