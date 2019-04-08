@@ -128,10 +128,12 @@ Après avoir écrit dans le fichier "s", le malware vérifie le temps écoulé e
 Regardons d'un peu plus près le write MBR:<br><br>
 Cette fonction va s'occuper de faire un CreateFile sur \\.\PhysicalDrive0 (correspond au MBR), et d'écraser son contenu avec un WriteFile.<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/mbr1.png "screen BadPunk.exe")<br><br>
+...<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/mbr2.png "screen BadPunk.exe")<br><br>
 Et pour le reboot :<br><br>
 Ici, le malware appelle OpenProcessToken, vérifie qu'il à les droit SeShutdownPrivileges, et si c'est le cas, redémarre la machine.
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/reboot.png "screen BadPunk.exe")<br><br>
+Et voici à quoi ressemble la machine après que le MBR soit écrasé et que la machine reboot, une jolie animation !<br><br>
 ![alt text](https://github.com/Lexsek/CTFSecurityDay2019/blob/master/images_badpunk/reboot2.png "screen BadPunk.exe")<br><br>
 
 Après avoir passé ces étapes, le malware crée un deuxième fichier dans le répertoire temporaire sous le nom de "ss", et appelle la fonction que j'ai renommée en Write_SS_File_Xor42_Of_S_File_And_Being_Debugged_WriteMBR_INTO_REBOOT. Cette fonction s'occupe principalement de lire notre premier fichier "s" écrit correspondant au screenshot de la machine au format image BMP, de le xorer avec la clé 0x42 et de l'écrire dans le fichier "ss"<br><br>
